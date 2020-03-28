@@ -607,9 +607,10 @@ header label {
 .post-wrap {
   position: relative;
   width: 100%;
-  max-width: 780px;
+  max-width: 850px;
   margin: 0 auto;
   padding-top: 2rem;
+  margin-left: 160px;
 }
 .post-wrap .archive-item {
   margin-left: 2rem;
@@ -960,7 +961,7 @@ header label {
   line-height: 1.7em;
   padding: 3px 5px;
   border-radius: 4px;
-  color: #c7254e;
+  color: #373942;
   background: #f8f5ec;
 }
 .dark-theme .post-content code {
