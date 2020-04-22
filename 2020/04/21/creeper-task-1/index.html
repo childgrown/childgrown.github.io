@@ -14,7 +14,7 @@
 
 
 
-<title>3-1 | Chloe&#39;s Blog</title>
+<title>creeper-task-1 | Chloe&#39;s Blog</title>
 
 
 
@@ -212,7 +212,7 @@
     
     <article class="post-wrap">
         <header class="post-header">
-            <h1 class="post-title">3-1</h1>
+            <h1 class="post-title">creeper-task-1</h1>
             
                 <div class="post-meta">
                     
@@ -264,7 +264,7 @@
             </div>
 
 <h3 id="requests-get第一个代码"><a href="#requests-get第一个代码" class="headerlink" title="requests.get第一个代码"></a>requests.get第一个代码</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> requests</span><br><span class="line">url = <span class="string">'https://www.python.org/dev/peps/pep-0020/'</span></span><br><span class="line">res = requests.get(url)</span><br><span class="line">text = res.text</span><br><span class="line">print(text)</span><br><span class="line"><span class="comment">#实际产生的text信息，就是上图中所示的页面源码，String字符串。</span></span><br><span class="line"></span><br><span class="line"><span class="comment">## 爬取python之禅并存入txt文件</span></span><br><span class="line"><span class="keyword">with</span> open(<span class="string">'zon_of_python.txt'</span>, <span class="string">'w'</span>) <span class="keyword">as</span> f:</span><br><span class="line">    f.write(text[text.find(<span class="string">'&lt;pre'</span>)+<span class="number">28</span>:text.find(<span class="string">'&lt;/pre&gt;'</span>)<span class="number">-1</span>])</span><br><span class="line">print(text[text.find(<span class="string">'&lt;pre'</span>)+<span class="number">28</span>:text.find(<span class="string">'&lt;/pre&gt;'</span>)<span class="number">-1</span>])</span><br></pre></td></tr></table></figure>
-
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#利用python自带的urllib完成以上操作：</span></span><br><span class="line"><span class="keyword">import</span> urllib</span><br><span class="line">url = <span class="string">'https://www.python.org/dev/peps/pep-0020/'</span></span><br><span class="line">res = urllib.request.urlopen(url).read().decode(<span class="string">'utf-8'</span>)</span><br><span class="line">print(res[res.find(<span class="string">'&lt;pre'</span>)+<span class="number">28</span>:res.find(<span class="string">'&lt;/pre&gt;'</span>)<span class="number">-1</span>])</span><br></pre></td></tr></table></figure>
 
 
         </div>
@@ -280,7 +280,7 @@
                 
                     <p class="copyright-item">
                         <span>Permalink:</span>
-                        <span><a href="https://childgrown.github.io/2020/04/21/3-1/">https://childgrown.github.io/2020/04/21/3-1/</a></span>
+                        <span><a href="https://childgrown.github.io/2020/04/21/creeper-task-1/">https://childgrown.github.io/2020/04/21/creeper-task-1/</a></span>
                     </p>
                 
                 
