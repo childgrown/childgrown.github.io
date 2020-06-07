@@ -14,7 +14,7 @@
 
 
 
-<title>Archives: 2020 | Chloe&#39;s Blog</title>
+<title>oracle用户账号被锁Unlock | Chloe&#39;s Blog</title>
 
 
 
@@ -143,107 +143,87 @@
     }
 </script>
         <div class="main">
-            <div class="post-wrap archive">
+            <div class="container">
     
     
-        
 
-        
-            <h3>2020</h3>
-        
-
-        <article class="archive-item">
-            <a class="archive-item-link" href="/2020/06/08/oracleUnlock/">oracle用户账号被锁Unlock</a>
-            <span class="archive-item-date">June 8, 2020</span>
-        </article>
     
-        
+    <article class="post-wrap">
+        <header class="post-header">
+            <h1 class="post-title">oracle用户账号被锁Unlock</h1>
+            
+                <div class="post-meta">
+                    
+                        Author: <a itemprop="author" rel="author" href="/">Chloe</a>
+                    
+
+                    
+                        <span class="post-time">
+                        Date: <a href="#">June 8, 2020&nbsp;&nbsp;1:34:48</a>
+                        </span>
+                    
+                    
+                </div>
+            
+        </header>
+
+        <div class="post-content">
+            <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash">维护人员，要习惯使用oracle用户维护</span></span><br><span class="line">su - oracle</span><br><span class="line"></span><br><span class="line"><span class="meta">#</span><span class="bash">在服务器上sqlplus以sysdba用户登陆</span></span><br><span class="line">主机名[oracle]$sqlplus / as sysdba</span><br><span class="line"></span><br><span class="line"><span class="meta">#</span><span class="bash">修改用户<span class="built_in">test</span>密码,这里注意密码里面不要有@符号，会有：ORA-00922: missing or invalid option报错。</span></span><br><span class="line">alter user test identified by haitaijiaxin_5</span><br><span class="line"></span><br><span class="line"><span class="meta">#</span><span class="bash">解锁<span class="built_in">test</span>用户账号</span></span><br><span class="line">alter user test account unlock</span><br><span class="line"></span><br><span class="line"><span class="meta">#</span><span class="bash">测试账号：</span></span><br><span class="line"><span class="meta">SQL&gt;</span><span class="bash"> connect <span class="built_in">test</span>/haitaijiaxin_5             </span></span><br><span class="line">Connected.</span><br></pre></td></tr></table></figure>
+        </div>
 
         
+            <section class="post-copyright">
+                
+                    <p class="copyright-item">
+                        <span>Author:</span>
+                        <span>Chloe</span>
+                    </p>
+                
+                
+                    <p class="copyright-item">
+                        <span>Permalink:</span>
+                        <span><a href="https://childgrown.github.io/2020/06/08/oracleUnlock/">https://childgrown.github.io/2020/06/08/oracleUnlock/</a></span>
+                    </p>
+                
+                
+                    <p class="copyright-item">
+                        <span>License:</span>
+                        <span>Copyright (c) 2019 <a href="http://creativecommons.org/licenses/by-nc/4.0/" target="_blank" rel="noopener">CC-BY-NC-4.0</a> LICENSE</span>
+                    </p>
+                
+                
+                     <p class="copyright-item">
+                         <span>Slogan:</span>
+                         <span>Do you believe in <strong>DESTINY</strong>?</span>
+                     </p>
+                
 
-        <article class="archive-item">
-            <a class="archive-item-link" href="/2020/06/08/sftpConnectionClosed/">sftp connection closed</a>
-            <span class="archive-item-date">June 8, 2020</span>
-        </article>
-    
+            </section>
         
+        <section class="post-tags">
+            <div>
+                <span>Tag(s):</span>
+                <span class="tag">
+                    
+                </span>
+            </div>
+            <div>
+                <a href="javascript:window.history.back();">back</a>
+                <span>· </span>
+                <a href="/">home</a>
+            </div>
+        </section>
+        <section class="post-nav">
+            
+            
+            <a class="next" rel="next" href="/2020/06/08/sftpConnectionClosed/">sftp connection closed</a>
+            
+        </section>
 
-        
 
-        <article class="archive-item">
-            <a class="archive-item-link" href="/2020/04/25/creeper-task-3/">creeper-task-3</a>
-            <span class="archive-item-date">April 25, 2020</span>
-        </article>
-    
-        
-
-        
-
-        <article class="archive-item">
-            <a class="archive-item-link" href="/2020/04/23/creeper-task-2/">creeper-task-2</a>
-            <span class="archive-item-date">April 23, 2020</span>
-        </article>
-    
-        
-
-        
-
-        <article class="archive-item">
-            <a class="archive-item-link" href="/2020/04/22/test-4-22/">test_4_22</a>
-            <span class="archive-item-date">April 22, 2020</span>
-        </article>
-    
-        
-
-        
-
-        <article class="archive-item">
-            <a class="archive-item-link" href="/2020/04/21/creeper-task-1/">creeper-task-1</a>
-            <span class="archive-item-date">April 21, 2020</span>
-        </article>
-    
-        
-
-        
-
-        <article class="archive-item">
-            <a class="archive-item-link" href="/2020/04/01/Task4-Modeling/">Task4-Modeling</a>
-            <span class="archive-item-date">April 1, 2020</span>
-        </article>
-    
-        
-
-        
-
-        <article class="archive-item">
-            <a class="archive-item-link" href="/2020/03/28/Task3-feature-engineering/">Task3-feature-engineering</a>
-            <span class="archive-item-date">March 28, 2020</span>
-        </article>
-    
-        
-
-        
-
-        <article class="archive-item">
-            <a class="archive-item-link" href="/2020/03/24/Task2-EDA/">Task2 数据分析（EDA）</a>
-            <span class="archive-item-date">March 24, 2020</span>
-        </article>
-    
-        
-
-        
-
-        <article class="archive-item">
-            <a class="archive-item-link" href="/2020/02/16/test/">test</a>
-            <span class="archive-item-date">February 16, 2020</span>
-        </article>
-    
-    
-    <nav class="pagination">
-        <span class="page-number current">1</span><a class="page-number" href="/archives/2020/page/2/">2</a>
-    </nav>
-
+    </article>
 </div>
+
         </div>
         <footer id="footer" class="footer">
     <div class="copyright">

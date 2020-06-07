@@ -1,0 +1,344 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+<meta name="viewport"
+      content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+<meta http-equiv="X-UA-Compatible" content="ie=edge">
+
+    <meta name="author" content="Chloe">
+
+
+    <meta name="subtitle" content="有些人能收到雨，而其他则只是被淋湿。">
+
+
+
+
+<title>sftp connection closed | Chloe&#39;s Blog</title>
+
+
+
+    <link rel="icon" href="/favicon.ico">
+
+
+
+
+    <!-- stylesheets list from _config.yml -->
+    
+    <link rel="stylesheet" href="/css/style.css">
+    
+
+
+
+    <!-- scripts list from _config.yml -->
+    
+    <script src="/js/script.js"></script>
+    
+    <script src="/js/tocbot.min.js"></script>
+    
+
+
+
+    
+    
+        <!-- MathJax配置，可通过单美元符号书写行内公式等 -->
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+    "HTML-CSS": {
+        preferredFont: "TeX",
+        availableFonts: ["STIX","TeX"],
+        linebreaks: { automatic:true },
+        EqnChunk: (MathJax.Hub.Browser.isMobile ? 10 : 50)
+    },
+    tex2jax: {
+        inlineMath: [ ["$", "$"], ["\\(","\\)"] ],
+        processEscapes: true,
+        ignoreClass: "tex2jax_ignore|dno",
+        skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+    },
+    TeX: {
+        equationNumbers: { autoNumber: "AMS" },
+        noUndefined: { attributes: { mathcolor: "red", mathbackground: "#FFEEEE", mathsize: "90%" } },
+        Macros: { href: "{}" }
+    },
+    messageStyle: "none"
+    });
+</script>
+<!-- 给MathJax元素添加has-jax class -->
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for(i=0; i < all.length; i += 1) {
+            all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+    });
+</script>
+<!-- 通过连接CDN加载MathJax的js代码 -->
+<script type="text/javascript" async
+        src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js?config=TeX-MML-AM_CHTML">
+</script>
+
+
+    
+
+
+<meta name="generator" content="Hexo 4.2.0"></head>
+<body>
+    <div class="wrapper">
+        <header>
+    <nav class="navbar">
+        <div class="container">
+            <div class="navbar-header header-logo"><a href="/">Chloe&#39;s Blog</a></div>
+            <div class="menu navbar-right">
+                
+                    <a class="menu-item" href="/archives">文章</a>
+                
+                    <a class="menu-item" href="/category">Categories[分类]</a>
+                
+                    <a class="menu-item" href="/tag">Tags</a>
+                
+                    <a class="menu-item" href="/about">About</a>
+                
+                <input id="switch_default" type="checkbox" class="switch_default">
+                <label for="switch_default" class="toggleBtn"></label>
+            </div>
+        </div>
+    </nav>
+
+    
+    <nav class="navbar-mobile" id="nav-mobile">
+        <div class="container">
+            <div class="navbar-header">
+                <div>
+                    <a href="/">Chloe&#39;s Blog</a><a id="mobile-toggle-theme">·&nbsp;Light</a>
+                </div>
+                <div class="menu-toggle" onclick="mobileBtn()">&#9776; Menu</div>
+            </div>
+            <div class="menu" id="mobile-menu">
+                
+                    <a class="menu-item" href="/archives">文章</a>
+                
+                    <a class="menu-item" href="/category">Categories[分类]</a>
+                
+                    <a class="menu-item" href="/tag">Tags</a>
+                
+                    <a class="menu-item" href="/about">About</a>
+                
+            </div>
+        </div>
+    </nav>
+
+</header>
+<script>
+    var mobileBtn = function f() {
+        var toggleMenu = document.getElementsByClassName("menu-toggle")[0];
+        var mobileMenu = document.getElementById("mobile-menu");
+        if(toggleMenu.classList.contains("active")){
+           toggleMenu.classList.remove("active")
+            mobileMenu.classList.remove("active")
+        }else{
+            toggleMenu.classList.add("active")
+            mobileMenu.classList.add("active")
+        }
+    }
+</script>
+        <div class="main">
+            <div class="container">
+    
+    
+        <div class="post-toc">
+    <div class="tocbot-list">
+    </div>
+    <div class="tocbot-list-menu">
+        <a class="tocbot-toc-expand" onclick="expand_toc()">Expand all</a>
+        <a onclick="go_top()">Back to top</a>
+        <a onclick="go_bottom()">Go to bottom</a>
+    </div>
+</div>
+
+<script>
+    document.ready(
+        function () {
+            tocbot.init({
+                tocSelector: '.tocbot-list',
+                contentSelector: '.post-content',
+                headingSelector: 'h1, h2, h3, h4, h5',
+                collapseDepth: 1,
+                orderedList: false,
+                scrollSmooth: true,
+            })
+        }
+    )
+
+    function expand_toc() {
+        var b = document.querySelector(".tocbot-toc-expand");
+        tocbot.init({
+            tocSelector: '.tocbot-list',
+            contentSelector: '.post-content',
+            headingSelector: 'h1, h2, h3, h4, h5',
+            collapseDepth: 6,
+            orderedList: false,
+            scrollSmooth: true,
+        });
+        b.setAttribute("onclick", "collapse_toc()");
+        b.innerHTML = "Collapse all"
+    }
+
+    function collapse_toc() {
+        var b = document.querySelector(".tocbot-toc-expand");
+        tocbot.init({
+            tocSelector: '.tocbot-list',
+            contentSelector: '.post-content',
+            headingSelector: 'h1, h2, h3, h4, h5',
+            collapseDepth: 1,
+            orderedList: false,
+            scrollSmooth: true,
+        });
+        b.setAttribute("onclick", "expand_toc()");
+        b.innerHTML = "Expand all"
+    }
+
+    function go_top() {
+        window.scrollTo(0, 0);
+    }
+
+    function go_bottom() {
+        window.scrollTo(0, document.body.scrollHeight);
+    }
+
+</script>
+    
+
+    
+    <article class="post-wrap">
+        <header class="post-header">
+            <h1 class="post-title">sftp connection closed</h1>
+            
+                <div class="post-meta">
+                    
+                        Author: <a itemprop="author" rel="author" href="/">Chloe</a>
+                    
+
+                    
+                        <span class="post-time">
+                        Date: <a href="#">June 8, 2020&nbsp;&nbsp;1:33:43</a>
+                        </span>
+                    
+                    
+                </div>
+            
+        </header>
+
+        <div class="post-content">
+            <h2 id="1、现象："><a href="#1、现象：" class="headerlink" title="1、现象："></a>1、现象：</h2><p>工作中出现应用反馈两台服务器192.12.3.27、192.12.3.28，其中一台服务器无法使用sftp，另外一台可以使用，提示connection closed</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash">sftp <span class="built_in">test</span>@192.12.3.26</span></span><br><span class="line">test@192.12.3.26's password: </span><br><span class="line">Connection closed</span><br></pre></td></tr></table></figure>
+
+<h2 id="2、什么是sftp："><a href="#2、什么是sftp：" class="headerlink" title="2、什么是sftp："></a>2、什么是sftp：</h2><ul>
+<li><p>sftp（英语：<span style="font-weight: bold;background-color: #D8EEB0">SSH File Transfer Protocol</span>，也称 Secret File Transfer Protocol，中文：安全文件传送协议，英文：Secure FTP 或字母缩写：SFTP），提供文件访问、传输和管理功能的网络传输协议。由互联网工程任务组（IETF）设计，透过 SSH 2.0 的扩展提供安全文件传输能力，但也能够被其他协议使用。是安全文件传送协议，可以为传输文件提供一种安全的网络的加密方法。</p>
+</li>
+<li><p><b style="font-weight: bold">sftp</b> 与 <strong>ftp</strong> 有着几乎一样的语法和功能。</p>
+</li>
+</ul>
+<ul>
+<li><p>即使 IETF 在网络草案数据阶段时，这个协议是在 SSH-2 文件中描述，它能够使用在许多不同的应用程序，例如安全文件传输在传输层安全（TLS）和传输信息管理于虚拟专用网应用程序。这个协议是假设运行在安全信道，例如 SSH，服务器已经认证客户端，并且客户端用户可利用协议。</p>
+</li>
+<li><p>与早期的 SCP 协议只允许文件传输相比，SFTP 允许对远程文件进行更广泛的操作——这更像一个远程文件系统协议。一个 SFTP 客户端与 SCP 的能力比较包括额外的恢复中断传输，目录列表和远程文件移动。</p>
+</li>
+<li><p><span style="font-weight: bold;background-color: #D8EEB0">SFTP是一种安全的文件传输协议，</span>一种通过网络传输文件的安全方法；它确保使用私有和安全的数据流来安全地传输数据。</p>
+</li>
+<li><p>SFTP要求客户端用户必须由服务器进行身份验证，并且数据传输必须通过安全通道（SSH）进行，即不传输明文密码或文件数据。它允许对远程文件执行各种操作，有点像远程文件系统协议。<span style="font-weight: bold;background-color: #D8EEB0">SFTP允许从暂停传输，目录列表和远程文件删除等操作中恢复。</span></p>
+</li>
+<li><p><span style="font-weight: bold;background-color: #D8EEB0">和传统的ftp相比：</span></p>
+</li>
+</ul>
+<ol>
+<li>FTP 基于TCP来传输文件，明文传输用户信息和数据。</li>
+<li>SFTP 基于SSH来加密传输文件，可靠性高，可断点续传。</li>
+</ol>
+<h2 id="3、解决思路："><a href="#3、解决思路：" class="headerlink" title="3、解决思路："></a>3、解决思路：</h2><ol>
+<li>是否存在密码过期，chage -l 用户名：发现密码是新置的，并且用ssh可以登陆，不存在密码问题。</li>
+<li>是否是做了用户登陆限制，查看是否配置了sftp和ssh走了不同端口，发现/etc/ssh/sshd_config和/etc/ssh/ssh_config 文件中并没有任何port的设置，暂时没有现象表明走的不同的端口。</li>
+<li>百度大法：搜索connection closed，<div class="image-box">
+                <img src="/image/sftp_conn_closed_1.png" alt="网上搜到的" title="" class="">
+                <p class="image-box-title">网上搜到的</p>
+            </div>
+但是发现实际配置已经是：<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Subsystem       sftp    /usr/libexec/openssh/sftp-server</span><br></pre></td></tr></table></figure>
+所以，显然不是这个原因造成了sftp无法连接。</li>
+<li>root能否连接sftp，结果是成功的，说明sftp正常。</li>
+<li>是不是这个test用户有做什么限制，新建一个普通用户是否能够连接sftp，结果也是一样的，connection closed。</li>
+<li>查看日志：/var/log/secure和/var/log/messages两个日志，查找sftp关键字，然后看到日志里有：<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">sftp-server[17093]:error:unknown extended request "fs-multiple-roots-support@vandyke.com"</span><br><span class="line">sftp-server[17093]:error:unknown extended request "openex@vandke.com"</span><br><span class="line">sftp-server[17093]:error:unknown extended request "vendor-id"</span><br></pre></td></tr></table></figure>
+然后百度搜了一下，也没明白到底是什么。。。第一反应是中病毒了？？？</li>
+<li>然后我突然灵光一闪，这个sftp走的的传输协议，如果sftp不正常，那scp是否正常？<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">scp ./test123 test@192.12.3.27:/root</span><br><span class="line">test_cy@192.12.3.27's password:</span><br><span class="line">scp: error while loading shared libraries:libcrypto.so.1.0.0: cannot open shared object file:Pemission denied</span><br><span class="line">lost connection</span><br></pre></td></tr></table></figure>
+喔唷～看来可能是这个有问题，这个提示放到百度里，一般搜到的是：<br>No such file or directory<br>too short之类，观察报错信息，看着就是权限不够，结合前面测试的root能登陆，普通用户不能登录，可以推测某个库文件，权限只有750权限，造成root用户能够使用sftp，而普通用户无法sftp<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">find / -name libcrypto.so.1.0.0</span><br><span class="line"><span class="meta">#</span><span class="bash">显示了许多文件其中，包括</span></span><br><span class="line">/usr/lib/libcrypto.so.1.0.0</span><br><span class="line">/usr/src/openssl-1.0.2h/libcrypto.so.1.0.0</span><br><span class="line">/usr/lib64/libcrypto.so.1.0.0</span><br><span class="line"><span class="meta">#</span><span class="bash">剩下都是某个用户目录下的文件……</span></span><br></pre></td></tr></table></figure>
+到这几个系统目录下查看权限，果然对应文件的其他用户权限是0，于是我改了一下权限<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">chmod 755 /usr/lib/libcrypto.so.1.0.0</span><br><span class="line">chmod 755 /usr/src/openssl-1.0.2h/libcrypto.so.1.0.0</span><br><span class="line">chmod 755 /usr/lib64/libcrypto.so.1.0.0</span><br></pre></td></tr></table></figure>
+测试通过！！！解决了！！！<br>然后为了确保无疑，去正常的服务器上查看，别的服务器上该文件确实是755的权限。<br>libcrypto.so.1.0.0这个文件看着像是加密解密的文件.<br>后来再跟应用确认的时候，应用表示当时他们在部署mysql的时候，可能碰过这个文件，导致该文件的权限出现异常。</li>
+</ol>
+<h2 id="参考："><a href="#参考：" class="headerlink" title="参考："></a>参考：</h2><p><a href="https://www.leiue.com/what-is-sftp" target="_blank" rel="noopener">https://www.leiue.com/what-is-sftp</a><br><a href="https://blog.csdn.net/xishining/article/details/86610889" target="_blank" rel="noopener">https://blog.csdn.net/xishining/article/details/86610889</a><br><a href="https://www.cnblogs.com/emanlee/p/4548800.html" target="_blank" rel="noopener">https://www.cnblogs.com/emanlee/p/4548800.html</a></p>
+
+        </div>
+
+        
+            <section class="post-copyright">
+                
+                    <p class="copyright-item">
+                        <span>Author:</span>
+                        <span>Chloe</span>
+                    </p>
+                
+                
+                    <p class="copyright-item">
+                        <span>Permalink:</span>
+                        <span><a href="https://childgrown.github.io/2020/06/08/sftpConnectionClosed/">https://childgrown.github.io/2020/06/08/sftpConnectionClosed/</a></span>
+                    </p>
+                
+                
+                    <p class="copyright-item">
+                        <span>License:</span>
+                        <span>Copyright (c) 2019 <a href="http://creativecommons.org/licenses/by-nc/4.0/" target="_blank" rel="noopener">CC-BY-NC-4.0</a> LICENSE</span>
+                    </p>
+                
+                
+                     <p class="copyright-item">
+                         <span>Slogan:</span>
+                         <span>Do you believe in <strong>DESTINY</strong>?</span>
+                     </p>
+                
+
+            </section>
+        
+        <section class="post-tags">
+            <div>
+                <span>Tag(s):</span>
+                <span class="tag">
+                    
+                </span>
+            </div>
+            <div>
+                <a href="javascript:window.history.back();">back</a>
+                <span>· </span>
+                <a href="/">home</a>
+            </div>
+        </section>
+        <section class="post-nav">
+            
+                <a class="prev" rel="prev" href="/2020/06/08/oracleUnlock/">oracle用户账号被锁Unlock</a>
+            
+            
+            <a class="next" rel="next" href="/2020/04/25/creeper-task-3/">creeper-task-3</a>
+            
+        </section>
+
+
+    </article>
+</div>
+
+        </div>
+        <footer id="footer" class="footer">
+    <div class="copyright">
+        <span>© Chloe | Powered by <a href="https://hexo.io" target="_blank">Hexo</a> & <a href="https://github.com/Siricee/hexo-theme-Chic" target="_blank">Chic</a></span>
+    </div>
+</footer>
+
+    </div>
+</body>
+</html>
