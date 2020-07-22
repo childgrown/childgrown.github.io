@@ -14,7 +14,7 @@
 
 
 
-<title>Archives: 2020 | Chloe&#39;s Blog</title>
+<title>磁盘IOPS和传输带宽 | Chloe&#39;s Blog</title>
 
 
 
@@ -143,107 +143,96 @@
     }
 </script>
         <div class="main">
-            <div class="post-wrap archive">
+            <div class="container">
     
     
-        
 
-        
-            <h3>2020</h3>
-        
-
-        <article class="archive-item">
-            <a class="archive-item-link" href="/2020/07/20/python1/">变量、运算符与数据类型</a>
-            <span class="archive-item-date">July 20, 2020</span>
-        </article>
     
-        
+    <article class="post-wrap">
+        <header class="post-header">
+            <h1 class="post-title">磁盘IOPS和传输带宽</h1>
+            
+                <div class="post-meta">
+                    
+                        Author: <a itemprop="author" rel="author" href="/">Chloe</a>
+                    
+
+                    
+                        <span class="post-time">
+                        Date: <a href="#">July 19, 2020&nbsp;&nbsp;2:03:51</a>
+                        </span>
+                    
+                    
+                </div>
+            
+        </header>
+
+        <div class="post-content">
+            <p>&emsp;&emsp;磁盘的IOPS，也就是每秒能进行多少次IO，每次IO根据写入数据的大小，这个值也不是固定的。<br>&emsp;&emsp;例如，数据总量10MB：</p>
+<ol>
+<li>写入10 000个大小为1KB的文件到硬盘上。因为写入10 000个文件是，根据文件分布情况和大小情况，可能需要做好几万甚至十几万次IO才能完成。</li>
+<li>写入1个10MB带下的文件到硬盘上。如果这个文件在磁盘上是连续存放的，那么只需要几十个IO就可以完成。</li>
+</ol>
+<p>&emsp;【】对于写入10 000个小文件的情况，因为每秒需要的IO非常高，所以此时如果有具有较高IOPS的磁盘，将会提速不少。而写入一个10MB文件的情况，就算用了较高的IOPS的硬盘来做，也不会有提升，因为只需要很少的IO就可以完成了，只有换用具有较大传输带宽的硬盘，才能体现出优势。<br>&emsp;&emsp;同一块磁盘在读写小块数据的时候速度时候是比较高的；而读写大块数据的时候速度比较低，因为读写花费的时间变长了。15000转的硬盘比10 000转的硬盘性能要高。</p>
+<p>申请的机器ip需要是在134.130.133.XXX这个网段的<br>计费dcs/dcf dbproxy服务器扩容需求<br>申请新增两台服务器，计划将原四台跟teledb服务器复用的四台（四个节点），迁移至新增的两台dbproxy服务器上<br>服务器硬件需求：<br>内存：256G<br>文件系统需求，普通硬盘（建议）:<br>    /boot     1G<br>    swap      64G<br>    /         100G<br>    /usr      100G<br>    /var      100G<br>    /tmp      20G<br>    /home     200G<br>    /app      sda盘的剩余空间（建议有1T的空间）</p>
+
+        </div>
 
         
+            <section class="post-copyright">
+                
+                    <p class="copyright-item">
+                        <span>Author:</span>
+                        <span>Chloe</span>
+                    </p>
+                
+                
+                    <p class="copyright-item">
+                        <span>Permalink:</span>
+                        <span><a href="https://childgrown.github.io/2020/07/19/iops/">https://childgrown.github.io/2020/07/19/iops/</a></span>
+                    </p>
+                
+                
+                    <p class="copyright-item">
+                        <span>License:</span>
+                        <span>Copyright (c) 2019 <a href="http://creativecommons.org/licenses/by-nc/4.0/" target="_blank" rel="noopener">CC-BY-NC-4.0</a> LICENSE</span>
+                    </p>
+                
+                
+                     <p class="copyright-item">
+                         <span>Slogan:</span>
+                         <span>Do you believe in <strong>DESTINY</strong>?</span>
+                     </p>
+                
 
-        <article class="archive-item">
-            <a class="archive-item-link" href="/2020/07/19/iops/">磁盘IOPS和传输带宽</a>
-            <span class="archive-item-date">July 19, 2020</span>
-        </article>
-    
+            </section>
         
+        <section class="post-tags">
+            <div>
+                <span>Tag(s):</span>
+                <span class="tag">
+                    
+                </span>
+            </div>
+            <div>
+                <a href="javascript:window.history.back();">back</a>
+                <span>· </span>
+                <a href="/">home</a>
+            </div>
+        </section>
+        <section class="post-nav">
+            
+                <a class="prev" rel="prev" href="/2020/07/20/python1/">变量、运算符与数据类型</a>
+            
+            
+            <a class="next" rel="next" href="/2020/07/02/wuzhihua/">wuzhihua</a>
+            
+        </section>
 
-        
 
-        <article class="archive-item">
-            <a class="archive-item-link" href="/2020/07/02/wuzhihua/">wuzhihua</a>
-            <span class="archive-item-date">July 2, 2020</span>
-        </article>
-    
-        
-
-        
-
-        <article class="archive-item">
-            <a class="archive-item-link" href="/2020/06/22/openSourceCourses/">开源人才教程小tips</a>
-            <span class="archive-item-date">June 22, 2020</span>
-        </article>
-    
-        
-
-        
-
-        <article class="archive-item">
-            <a class="archive-item-link" href="/2020/06/22/elk7-6-2-usingKibanaInProductionEnv/">在生产环境使用Kibana7.6.2</a>
-            <span class="archive-item-date">June 22, 2020</span>
-        </article>
-    
-        
-
-        
-
-        <article class="archive-item">
-            <a class="archive-item-link" href="/2020/06/17/shutdown-esNode/">关闭Elasticsearch7.6.2的节点</a>
-            <span class="archive-item-date">June 17, 2020</span>
-        </article>
-    
-        
-
-        
-
-        <article class="archive-item">
-            <a class="archive-item-link" href="/2020/06/17/es7-6-2-secureSettings/">es7.6.2_secureSettings</a>
-            <span class="archive-item-date">June 17, 2020</span>
-        </article>
-    
-        
-
-        
-
-        <article class="archive-item">
-            <a class="archive-item-link" href="/2020/06/16/yum-server-setting/">离线配置内网yum源</a>
-            <span class="archive-item-date">June 16, 2020</span>
-        </article>
-    
-        
-
-        
-
-        <article class="archive-item">
-            <a class="archive-item-link" href="/2020/06/16/useradd-umask-problems/">useradd创建用户时异常</a>
-            <span class="archive-item-date">June 16, 2020</span>
-        </article>
-    
-        
-
-        
-
-        <article class="archive-item">
-            <a class="archive-item-link" href="/2020/06/15/commonUsers-cannot-changePasswd/">普通用户无法修改自己的密码的一种情况</a>
-            <span class="archive-item-date">June 15, 2020</span>
-        </article>
-    
-    
-    <nav class="pagination">
-        <span class="page-number current">1</span><a class="page-number" href="/archives/2020/page/2/">2</a><a class="page-number" href="/archives/2020/page/3/">3</a>
-    </nav>
-
+    </article>
 </div>
+
         </div>
         <footer id="footer" class="footer">
     <div class="copyright">

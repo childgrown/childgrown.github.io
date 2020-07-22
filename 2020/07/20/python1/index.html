@@ -1,0 +1,540 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+<meta name="viewport"
+      content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+<meta http-equiv="X-UA-Compatible" content="ie=edge">
+
+    <meta name="author" content="Chloe">
+
+
+    <meta name="subtitle" content="有些人能收到雨，而其他则只是被淋湿。">
+
+
+
+
+<title>变量、运算符与数据类型 | Chloe&#39;s Blog</title>
+
+
+
+    <link rel="icon" href="/favicon.ico">
+
+
+
+
+    <!-- stylesheets list from _config.yml -->
+    
+    <link rel="stylesheet" href="/css/style.css">
+    
+
+
+
+    <!-- scripts list from _config.yml -->
+    
+    <script src="/js/script.js"></script>
+    
+    <script src="/js/tocbot.min.js"></script>
+    
+
+
+
+    
+    
+        <!-- MathJax配置，可通过单美元符号书写行内公式等 -->
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+    "HTML-CSS": {
+        preferredFont: "TeX",
+        availableFonts: ["STIX","TeX"],
+        linebreaks: { automatic:true },
+        EqnChunk: (MathJax.Hub.Browser.isMobile ? 10 : 50)
+    },
+    tex2jax: {
+        inlineMath: [ ["$", "$"], ["\\(","\\)"] ],
+        processEscapes: true,
+        ignoreClass: "tex2jax_ignore|dno",
+        skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+    },
+    TeX: {
+        equationNumbers: { autoNumber: "AMS" },
+        noUndefined: { attributes: { mathcolor: "red", mathbackground: "#FFEEEE", mathsize: "90%" } },
+        Macros: { href: "{}" }
+    },
+    messageStyle: "none"
+    });
+</script>
+<!-- 给MathJax元素添加has-jax class -->
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for(i=0; i < all.length; i += 1) {
+            all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+    });
+</script>
+<!-- 通过连接CDN加载MathJax的js代码 -->
+<script type="text/javascript" async
+        src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js?config=TeX-MML-AM_CHTML">
+</script>
+
+
+    
+
+
+<meta name="generator" content="Hexo 4.2.0"></head>
+<body>
+    <div class="wrapper">
+        <header>
+    <nav class="navbar">
+        <div class="container">
+            <div class="navbar-header header-logo"><a href="/">Chloe&#39;s Blog</a></div>
+            <div class="menu navbar-right">
+                
+                    <a class="menu-item" href="/archives">文章</a>
+                
+                    <a class="menu-item" href="/category">Categories[分类]</a>
+                
+                    <a class="menu-item" href="/tag">Tags</a>
+                
+                    <a class="menu-item" href="/about">About</a>
+                
+                <input id="switch_default" type="checkbox" class="switch_default">
+                <label for="switch_default" class="toggleBtn"></label>
+            </div>
+        </div>
+    </nav>
+
+    
+    <nav class="navbar-mobile" id="nav-mobile">
+        <div class="container">
+            <div class="navbar-header">
+                <div>
+                    <a href="/">Chloe&#39;s Blog</a><a id="mobile-toggle-theme">·&nbsp;Light</a>
+                </div>
+                <div class="menu-toggle" onclick="mobileBtn()">&#9776; Menu</div>
+            </div>
+            <div class="menu" id="mobile-menu">
+                
+                    <a class="menu-item" href="/archives">文章</a>
+                
+                    <a class="menu-item" href="/category">Categories[分类]</a>
+                
+                    <a class="menu-item" href="/tag">Tags</a>
+                
+                    <a class="menu-item" href="/about">About</a>
+                
+            </div>
+        </div>
+    </nav>
+
+</header>
+<script>
+    var mobileBtn = function f() {
+        var toggleMenu = document.getElementsByClassName("menu-toggle")[0];
+        var mobileMenu = document.getElementById("mobile-menu");
+        if(toggleMenu.classList.contains("active")){
+           toggleMenu.classList.remove("active")
+            mobileMenu.classList.remove("active")
+        }else{
+            toggleMenu.classList.add("active")
+            mobileMenu.classList.add("active")
+        }
+    }
+</script>
+        <div class="main">
+            <div class="container">
+    
+    
+        <div class="post-toc">
+    <div class="tocbot-list">
+    </div>
+    <div class="tocbot-list-menu">
+        <a class="tocbot-toc-expand" onclick="expand_toc()">Expand all</a>
+        <a onclick="go_top()">Back to top</a>
+        <a onclick="go_bottom()">Go to bottom</a>
+    </div>
+</div>
+
+<script>
+    document.ready(
+        function () {
+            tocbot.init({
+                tocSelector: '.tocbot-list',
+                contentSelector: '.post-content',
+                headingSelector: 'h1, h2, h3, h4, h5',
+                collapseDepth: 1,
+                orderedList: false,
+                scrollSmooth: true,
+            })
+        }
+    )
+
+    function expand_toc() {
+        var b = document.querySelector(".tocbot-toc-expand");
+        tocbot.init({
+            tocSelector: '.tocbot-list',
+            contentSelector: '.post-content',
+            headingSelector: 'h1, h2, h3, h4, h5',
+            collapseDepth: 6,
+            orderedList: false,
+            scrollSmooth: true,
+        });
+        b.setAttribute("onclick", "collapse_toc()");
+        b.innerHTML = "Collapse all"
+    }
+
+    function collapse_toc() {
+        var b = document.querySelector(".tocbot-toc-expand");
+        tocbot.init({
+            tocSelector: '.tocbot-list',
+            contentSelector: '.post-content',
+            headingSelector: 'h1, h2, h3, h4, h5',
+            collapseDepth: 1,
+            orderedList: false,
+            scrollSmooth: true,
+        });
+        b.setAttribute("onclick", "expand_toc()");
+        b.innerHTML = "Expand all"
+    }
+
+    function go_top() {
+        window.scrollTo(0, 0);
+    }
+
+    function go_bottom() {
+        window.scrollTo(0, document.body.scrollHeight);
+    }
+
+</script>
+    
+
+    
+    <article class="post-wrap">
+        <header class="post-header">
+            <h1 class="post-title">变量、运算符与数据类型</h1>
+            
+                <div class="post-meta">
+                    
+                        Author: <a itemprop="author" rel="author" href="/">Chloe</a>
+                    
+
+                    
+                        <span class="post-time">
+                        Date: <a href="#">July 20, 2020&nbsp;&nbsp;21:32:13</a>
+                        </span>
+                    
+                    
+                </div>
+            
+        </header>
+
+        <div class="post-content">
+            <p>练习题：</p>
+<ol>
+<li>怎样对python中的代码进行注释？</li>
+<li>python有哪些运算符，这些运算符的优先级是怎样的？</li>
+<li>python 中 is, is not 与 ==, != 的区别是什么？</li>
+<li>python 中包含哪些数据类型？这些数据类型之间如何转换？</li>
+</ol>
+<h2 id="1-注释"><a href="#1-注释" class="headerlink" title="1. 注释"></a>1. 注释</h2><h3 id="1-单行注释"><a href="#1-单行注释" class="headerlink" title="1. 单行注释"></a>1. 单行注释</h3><p>在 Python 中，# 表示注释，作用于整行。<br>【例子】</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 这是一个注释</span></span><br><span class="line">print(<span class="string">"Hello world"</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment"># Hello world</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="2-多行注释"><a href="#2-多行注释" class="headerlink" title="2. 多行注释"></a>2. 多行注释</h3><p>‘’’ ‘’’ 或者 “”” “”” 表示区间注释，在三引号之间的所有内容被注释<br>【例子】</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="string">'''</span></span><br><span class="line"><span class="string">这是多行注释，用三个单引号</span></span><br><span class="line"><span class="string">这是多行注释，用三个单引号</span></span><br><span class="line"><span class="string">这是多行注释，用三个单引号</span></span><br><span class="line"><span class="string">'''</span></span><br><span class="line">print(<span class="string">"Hello china"</span>) </span><br><span class="line"><span class="comment"># Hello china</span></span><br><span class="line"></span><br><span class="line"><span class="string">"""</span></span><br><span class="line"><span class="string">这是多行注释，用三个双引号</span></span><br><span class="line"><span class="string">这是多行注释，用三个双引号 </span></span><br><span class="line"><span class="string">这是多行注释，用三个双引号</span></span><br><span class="line"><span class="string">"""</span></span><br><span class="line">print(<span class="string">"hello china"</span>) </span><br><span class="line"><span class="comment"># hello china</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="2-运算符"><a href="#2-运算符" class="headerlink" title="2. 运算符"></a>2. 运算符</h2><p>运算符包括：</p>
+<ul>
+<li>算数运算符</li>
+<li>比较运算符</li>
+<li>逻辑运算符</li>
+<li>位运算符</li>
+<li>三元运算符</li>
+<li>其他运算符<h3 id="1-算数运算符"><a href="#1-算数运算符" class="headerlink" title="1. 算数运算符"></a>1. 算数运算符</h3></li>
+</ul>
+<table>
+<thead>
+<tr>
+<th align="center">操作符</th>
+<th align="center">名称</th>
+<th align="center">示例</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="center"><code>+</code></td>
+<td align="center">加</td>
+<td align="center"><code>1 + 1</code></td>
+</tr>
+<tr>
+<td align="center"><code>-</code></td>
+<td align="center">减</td>
+<td align="center"><code>2 - 1</code></td>
+</tr>
+<tr>
+<td align="center"><code>*</code></td>
+<td align="center">乘</td>
+<td align="center"><code>3 * 4</code></td>
+</tr>
+<tr>
+<td align="center"><code>/</code></td>
+<td align="center">除</td>
+<td align="center"><code>3 / 4</code></td>
+</tr>
+<tr>
+<td align="center"><code>//</code></td>
+<td align="center">整除（地板除）</td>
+<td align="center"><code>3 // 4</code></td>
+</tr>
+<tr>
+<td align="center"><code>%</code></td>
+<td align="center">取余</td>
+<td align="center"><code>3 % 4</code></td>
+</tr>
+<tr>
+<td align="center"><code>**</code></td>
+<td align="center">幂</td>
+<td align="center"><code>2 ** 3</code></td>
+</tr>
+</tbody></table>
+<p>【例子】</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">print(<span class="number">1</span> + <span class="number">1</span>)  <span class="comment"># 2</span></span><br><span class="line">print(<span class="number">2</span> - <span class="number">1</span>)  <span class="comment"># 1</span></span><br><span class="line">print(<span class="number">3</span> * <span class="number">4</span>)  <span class="comment"># 12</span></span><br><span class="line">print(<span class="number">3</span> / <span class="number">4</span>)  <span class="comment"># 0.75</span></span><br><span class="line">print(<span class="number">3</span> // <span class="number">4</span>)  <span class="comment"># 0</span></span><br><span class="line">print(<span class="number">3</span> % <span class="number">4</span>)  <span class="comment"># 3</span></span><br><span class="line">print(<span class="number">2</span> ** <span class="number">3</span>)  <span class="comment"># 8</span></span><br></pre></td></tr></table></figure>
+
+
+<h3 id="2-比较运算符"><a href="#2-比较运算符" class="headerlink" title="2. 比较运算符"></a>2. 比较运算符</h3><table>
+<thead>
+<tr>
+<th align="center">操作符</th>
+<th align="center">名称</th>
+<th align="center">示例</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="center"><code>&gt;</code></td>
+<td align="center">大于</td>
+<td align="center"><code>2 &gt; 1</code></td>
+</tr>
+<tr>
+<td align="center"><code>&gt;=</code></td>
+<td align="center">大于等于</td>
+<td align="center"><code>2 &gt;= 4</code></td>
+</tr>
+<tr>
+<td align="center"><code>&lt;</code></td>
+<td align="center">小于</td>
+<td align="center"><code>1 &lt; 2</code></td>
+</tr>
+<tr>
+<td align="center"><code>&lt;=</code></td>
+<td align="center">小于等于</td>
+<td align="center"><code>5 &lt;= 2</code></td>
+</tr>
+<tr>
+<td align="center"><code>==</code></td>
+<td align="center">等于</td>
+<td align="center"><code>3 == 4</code></td>
+</tr>
+<tr>
+<td align="center"><code>!=</code></td>
+<td align="center">不等于</td>
+<td align="center"><code>3 != 5</code></td>
+</tr>
+</tbody></table>
+<p>【例子】</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">print(<span class="number">2</span> &gt; <span class="number">1</span>)  <span class="comment"># True</span></span><br><span class="line">print(<span class="number">2</span> &gt;= <span class="number">4</span>)  <span class="comment"># False</span></span><br><span class="line">print(<span class="number">1</span> &lt; <span class="number">2</span>)  <span class="comment"># True</span></span><br><span class="line">print(<span class="number">5</span> &lt;= <span class="number">2</span>)  <span class="comment"># False</span></span><br><span class="line">print(<span class="number">3</span> == <span class="number">4</span>)  <span class="comment"># False</span></span><br><span class="line">print(<span class="number">3</span> != <span class="number">5</span>)  <span class="comment"># True</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="3-逻辑运算符"><a href="#3-逻辑运算符" class="headerlink" title="3. 逻辑运算符"></a>3. 逻辑运算符</h3><table>
+<thead>
+<tr>
+<th align="center">操作符</th>
+<th align="center">名称</th>
+<th align="center">示例</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="center"><code>and</code></td>
+<td align="center">与</td>
+<td align="center"><code>(3 &gt; 2) and (3 &lt; 5)</code></td>
+</tr>
+<tr>
+<td align="center"><code>or</code></td>
+<td align="center">或</td>
+<td align="center"><code>(1 &gt; 3) or (9 &lt; 2)</code></td>
+</tr>
+<tr>
+<td align="center"><code>not</code></td>
+<td align="center">非</td>
+<td align="center"><code>not (2 &gt; 1)</code></td>
+</tr>
+</tbody></table>
+<p>【例子】</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">print((<span class="number">3</span> &gt; <span class="number">2</span>) <span class="keyword">and</span> (<span class="number">3</span> &lt; <span class="number">5</span>))  <span class="comment"># True</span></span><br><span class="line">print((<span class="number">1</span> &gt; <span class="number">3</span>) <span class="keyword">or</span> (<span class="number">9</span> &lt; <span class="number">2</span>))  <span class="comment"># False</span></span><br><span class="line">print(<span class="keyword">not</span> (<span class="number">2</span> &gt; <span class="number">1</span>))  <span class="comment"># False</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="4-位运算符"><a href="#4-位运算符" class="headerlink" title="4. 位运算符"></a>4. 位运算符</h3><table>
+<thead>
+<tr>
+<th align="center">操作符</th>
+<th align="center">名称</th>
+<th align="center">示例</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="center"><code>~</code></td>
+<td align="center">按位取反</td>
+<td align="center"><code>~4</code></td>
+</tr>
+<tr>
+<td align="center"><code>&amp;</code></td>
+<td align="center">按位与</td>
+<td align="center"><code>4 &amp; 5</code></td>
+</tr>
+<tr>
+<td align="center"><code>|</code></td>
+<td align="center">按位或</td>
+<td align="center"><code>4 | 5</code></td>
+</tr>
+<tr>
+<td align="center"><code>^</code></td>
+<td align="center">按位异或</td>
+<td align="center"><code>4 ^ 5</code></td>
+</tr>
+<tr>
+<td align="center"><code>&lt;&lt;</code></td>
+<td align="center">左移</td>
+<td align="center"><code>4 &lt;&lt; 2</code></td>
+</tr>
+<tr>
+<td align="center"><code>&gt;&gt;</code></td>
+<td align="center">右移</td>
+<td align="center"><code>4 &gt;&gt; 2</code></td>
+</tr>
+</tbody></table>
+<p>【例子】有关二进制的运算，参见“位运算”部分的讲解。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">print(bin(<span class="number">4</span>))  <span class="comment"># 0b100</span></span><br><span class="line">print(bin(<span class="number">5</span>))  <span class="comment"># 0b101</span></span><br><span class="line">print(bin(~<span class="number">4</span>), ~<span class="number">4</span>)  <span class="comment"># -0b101 -5</span></span><br><span class="line">print(bin(<span class="number">4</span> &amp; <span class="number">5</span>), <span class="number">4</span> &amp; <span class="number">5</span>)  <span class="comment"># 0b100 4</span></span><br><span class="line">print(bin(<span class="number">4</span> | <span class="number">5</span>), <span class="number">4</span> | <span class="number">5</span>)  <span class="comment"># 0b101 5</span></span><br><span class="line">print(bin(<span class="number">4</span> ^ <span class="number">5</span>), <span class="number">4</span> ^ <span class="number">5</span>)  <span class="comment"># 0b1 1</span></span><br><span class="line">print(bin(<span class="number">4</span> &lt;&lt; <span class="number">2</span>), <span class="number">4</span> &lt;&lt; <span class="number">2</span>)  <span class="comment"># 0b10000 16</span></span><br><span class="line">print(bin(<span class="number">4</span> &gt;&gt; <span class="number">2</span>), <span class="number">4</span> &gt;&gt; <span class="number">2</span>)  <span class="comment"># 0b1 1</span></span><br></pre></td></tr></table></figure>
+
+
+<h3 id="5-三元运算符"><a href="#5-三元运算符" class="headerlink" title="5. 三元运算符"></a>5. 三元运算符</h3><p>【例子】</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">x, y = <span class="number">4</span>, <span class="number">5</span></span><br><span class="line"><span class="keyword">if</span> x &lt; y:</span><br><span class="line">    small = x</span><br><span class="line"><span class="keyword">else</span>:</span><br><span class="line">    small = y</span><br><span class="line"></span><br><span class="line">print(small)  <span class="comment"># 4</span></span><br></pre></td></tr></table></figure>
+
+<p>有了这个三元操作符的条件表达式，你可以使用一条语句来完成以上的条件判断和赋值操作。</p>
+<p>【例子】</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">x, y = <span class="number">4</span>, <span class="number">5</span></span><br><span class="line">small = x <span class="keyword">if</span> x &lt; y <span class="keyword">else</span> y</span><br><span class="line">print(small)  <span class="comment"># 4</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="6-其他运算符"><a href="#6-其他运算符" class="headerlink" title="6. 其他运算符"></a>6. 其他运算符</h3><table>
+<thead>
+<tr>
+<th align="center">操作符</th>
+<th align="center">名称</th>
+<th align="center">示例</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="center"><code>in</code></td>
+<td align="center">存在</td>
+<td align="center"><code>&#39;A&#39; in [&#39;A&#39;, &#39;B&#39;, &#39;C&#39;]</code></td>
+</tr>
+<tr>
+<td align="center"><code>not in</code></td>
+<td align="center">不存在</td>
+<td align="center"><code>&#39;h&#39; not in [&#39;A&#39;, &#39;B&#39;, &#39;C&#39;]</code></td>
+</tr>
+<tr>
+<td align="center"><code>is</code></td>
+<td align="center">是</td>
+<td align="center"><code>&quot;hello&quot; is &quot;hello&quot;</code></td>
+</tr>
+<tr>
+<td align="center"><code>is not</code></td>
+<td align="center">不是</td>
+<td align="center"><code>&quot;hello&quot; is not &quot;hello&quot;</code></td>
+</tr>
+</tbody></table>
+<p>【例子】</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">letters = [<span class="string">'A'</span>, <span class="string">'B'</span>, <span class="string">'C'</span>]</span><br><span class="line"><span class="keyword">if</span> <span class="string">'A'</span> <span class="keyword">in</span> letters:</span><br><span class="line">    print(<span class="string">'A'</span> + <span class="string">' exists'</span>)</span><br><span class="line"><span class="keyword">if</span> <span class="string">'h'</span> <span class="keyword">not</span> <span class="keyword">in</span> letters:</span><br><span class="line">    print(<span class="string">'h'</span> + <span class="string">' not exists'</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment"># A exists</span></span><br><span class="line"><span class="comment"># h not exists</span></span><br></pre></td></tr></table></figure>
+
+<p>【例子】比较的两个变量均指向不可变类型。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">a = <span class="string">"hello"</span></span><br><span class="line">b = <span class="string">"hello"</span></span><br><span class="line">print(a <span class="keyword">is</span> b, a == b)  <span class="comment"># True True</span></span><br><span class="line">print(a <span class="keyword">is</span> <span class="keyword">not</span> b, a != b)  <span class="comment"># False False</span></span><br></pre></td></tr></table></figure>
+
+<p>【例子】比较的两个变量均指向可变类型。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">a = [<span class="string">"hello"</span>]</span><br><span class="line">b = [<span class="string">"hello"</span>]</span><br><span class="line">print(a <span class="keyword">is</span> b, a == b)  <span class="comment"># False True</span></span><br><span class="line">print(a <span class="keyword">is</span> <span class="keyword">not</span> b, a != b)  <span class="comment"># True False</span></span><br></pre></td></tr></table></figure>
+
+<p>注意：</p>
+<ul>
+<li>is, is not 对比的是两个变量的内存地址</li>
+<li>==, != 对比的是两个变量的值</li>
+<li>比较的两个变量，指向的都是地址不可变的类型（str等），那么is，is not 和 ==，！= 是完全等价的。</li>
+<li>对比的两个变量，指向的是地址可变的类型（list，dict，tuple等），则两者是有区别的。</li>
+</ul>
+
+        </div>
+
+        
+            <section class="post-copyright">
+                
+                    <p class="copyright-item">
+                        <span>Author:</span>
+                        <span>Chloe</span>
+                    </p>
+                
+                
+                    <p class="copyright-item">
+                        <span>Permalink:</span>
+                        <span><a href="https://childgrown.github.io/2020/07/20/python1/">https://childgrown.github.io/2020/07/20/python1/</a></span>
+                    </p>
+                
+                
+                    <p class="copyright-item">
+                        <span>License:</span>
+                        <span>Copyright (c) 2019 <a href="http://creativecommons.org/licenses/by-nc/4.0/" target="_blank" rel="noopener">CC-BY-NC-4.0</a> LICENSE</span>
+                    </p>
+                
+                
+                     <p class="copyright-item">
+                         <span>Slogan:</span>
+                         <span>Do you believe in <strong>DESTINY</strong>?</span>
+                     </p>
+                
+
+            </section>
+        
+        <section class="post-tags">
+            <div>
+                <span>Tag(s):</span>
+                <span class="tag">
+                    
+                    
+                        <a href="/tags/%E5%8F%98%E9%87%8F/"># 变量</a>
+                    
+                        <a href="/tags/%E8%BF%90%E7%AE%97%E7%AC%A6/"># 运算符</a>
+                    
+                        <a href="/tags/%E6%95%B0%E6%8D%AE%E7%B1%BB%E5%9E%8B/"># 数据类型</a>
+                    
+                        
+                </span>
+            </div>
+            <div>
+                <a href="javascript:window.history.back();">back</a>
+                <span>· </span>
+                <a href="/">home</a>
+            </div>
+        </section>
+        <section class="post-nav">
+            
+            
+            <a class="next" rel="next" href="/2020/07/19/iops/">磁盘IOPS和传输带宽</a>
+            
+        </section>
+
+
+    </article>
+</div>
+
+        </div>
+        <footer id="footer" class="footer">
+    <div class="copyright">
+        <span>© Chloe | Powered by <a href="https://hexo.io" target="_blank">Hexo</a> & <a href="https://github.com/Siricee/hexo-theme-Chic" target="_blank">Chic</a></span>
+    </div>
+</footer>
+
+    </div>
+</body>
+</html>

@@ -14,7 +14,7 @@
 
 
 
-<title>oracle用户账号被锁Unlock | Chloe&#39;s Blog</title>
+<title>useradd创建用户失败，报【配置错误 - 未知项目“umask”(请通知管理员)】 | Chloe&#39;s Blog</title>
 
 
 
@@ -146,11 +146,73 @@
             <div class="container">
     
     
+        <div class="post-toc">
+    <div class="tocbot-list">
+    </div>
+    <div class="tocbot-list-menu">
+        <a class="tocbot-toc-expand" onclick="expand_toc()">Expand all</a>
+        <a onclick="go_top()">Back to top</a>
+        <a onclick="go_bottom()">Go to bottom</a>
+    </div>
+</div>
+
+<script>
+    document.ready(
+        function () {
+            tocbot.init({
+                tocSelector: '.tocbot-list',
+                contentSelector: '.post-content',
+                headingSelector: 'h1, h2, h3, h4, h5',
+                collapseDepth: 1,
+                orderedList: false,
+                scrollSmooth: true,
+            })
+        }
+    )
+
+    function expand_toc() {
+        var b = document.querySelector(".tocbot-toc-expand");
+        tocbot.init({
+            tocSelector: '.tocbot-list',
+            contentSelector: '.post-content',
+            headingSelector: 'h1, h2, h3, h4, h5',
+            collapseDepth: 6,
+            orderedList: false,
+            scrollSmooth: true,
+        });
+        b.setAttribute("onclick", "collapse_toc()");
+        b.innerHTML = "Collapse all"
+    }
+
+    function collapse_toc() {
+        var b = document.querySelector(".tocbot-toc-expand");
+        tocbot.init({
+            tocSelector: '.tocbot-list',
+            contentSelector: '.post-content',
+            headingSelector: 'h1, h2, h3, h4, h5',
+            collapseDepth: 1,
+            orderedList: false,
+            scrollSmooth: true,
+        });
+        b.setAttribute("onclick", "expand_toc()");
+        b.innerHTML = "Expand all"
+    }
+
+    function go_top() {
+        window.scrollTo(0, 0);
+    }
+
+    function go_bottom() {
+        window.scrollTo(0, document.body.scrollHeight);
+    }
+
+</script>
+    
 
     
     <article class="post-wrap">
         <header class="post-header">
-            <h1 class="post-title">oracle用户账号被锁Unlock</h1>
+            <h1 class="post-title">useradd创建用户失败，报【配置错误 - 未知项目“umask”(请通知管理员)】</h1>
             
                 <div class="post-meta">
                     
@@ -159,7 +221,7 @@
 
                     
                         <span class="post-time">
-                        Date: <a href="#">June 8, 2020&nbsp;&nbsp;1:34:48</a>
+                        Date: <a href="#">June 15, 2020&nbsp;&nbsp;8:48:09</a>
                         </span>
                     
                     
@@ -168,7 +230,12 @@
         </header>
 
         <div class="post-content">
-            <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">su - oracle</span><br><span class="line"></span><br><span class="line"><span class="meta">#</span><span class="bash">在服务器上sqlplus以sysdba用户登陆</span></span><br><span class="line">主机名[oracle]$sqlplus / as sysdba</span><br><span class="line"></span><br><span class="line"><span class="meta">#</span><span class="bash">修改用户<span class="built_in">test</span>密码,这里注意密码里面不要有@符号，会有：ORA-00922: missing or invalid option报错。</span></span><br><span class="line">alter user test identified by haitaijiaxin_5</span><br><span class="line"></span><br><span class="line"><span class="meta">#</span><span class="bash">解锁<span class="built_in">test</span>用户账号</span></span><br><span class="line">alter user test account unlock</span><br><span class="line"></span><br><span class="line"><span class="meta">#</span><span class="bash">测试账号：</span></span><br><span class="line"><span class="meta">SQL&gt;</span><span class="bash"> connect <span class="built_in">test</span>/haitaijiaxin_5             </span></span><br><span class="line">Connected.</span><br></pre></td></tr></table></figure>
+            <h3 id="现象："><a href="#现象：" class="headerlink" title="现象："></a>现象：</h3><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">[root@test01 ~]# useradd test</span><br><span class="line">配置错误 - 未知项目“umask”(请通知管理员)</span><br><span class="line">/etc/passwd中未生成该用户</span><br></pre></td></tr></table></figure>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">[root@test01 ~]# umask</span><br><span class="line">0022</span><br></pre></td></tr></table></figure>
+<h3 id="解决方案："><a href="#解决方案：" class="headerlink" title="解决方案："></a>解决方案：</h3><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">[root@test01 ~]# vim /etc/profile</span><br><span class="line"><span class="meta">#</span><span class="bash">在文件尾部追加 </span></span><br><span class="line">umask 027</span><br><span class="line"></span><br><span class="line">[root@test01 ~]# source /etc/profile</span><br><span class="line">[root@test01 ~]# umask</span><br><span class="line">0027</span><br><span class="line"></span><br><span class="line">[root@test01 ~]# useradd test</span><br><span class="line">配置错误 - 未知项目“umask”(请通知管理员)</span><br><span class="line">useradd：用户“test”已存在</span><br></pre></td></tr></table></figure>
+<p>这说明</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">[root@srhadoop3 ~]# vim /etc/login.defs</span><br><span class="line">其中该文件中，umask应该是大写的，小写改成大写即可。</span><br></pre></td></tr></table></figure>
+
         </div>
 
         
@@ -182,7 +249,7 @@
                 
                     <p class="copyright-item">
                         <span>Permalink:</span>
-                        <span><a href="https://childgrown.github.io/2020/06/08/oracleUnlock/">https://childgrown.github.io/2020/06/08/oracleUnlock/</a></span>
+                        <span><a href="https://childgrown.github.io/2020/06/15/umask-useradd-failed/">https://childgrown.github.io/2020/06/15/umask-useradd-failed/</a></span>
                     </p>
                 
                 
@@ -205,6 +272,12 @@
                 <span>Tag(s):</span>
                 <span class="tag">
                     
+                    
+                        <a href="/tags/linux/"># linux</a>
+                    
+                        <a href="/tags/useradd/"># useradd</a>
+                    
+                        
                 </span>
             </div>
             <div>
@@ -215,10 +288,10 @@
         </section>
         <section class="post-nav">
             
-                <a class="prev" rel="prev" href="/2020/06/15/umask-useradd-failed/">useradd创建用户失败，报【配置错误 - 未知项目“umask”(请通知管理员)】</a>
+                <a class="prev" rel="prev" href="/2020/06/15/commonUsers-cannot-changePasswd/">普通用户无法修改自己的密码的一种情况</a>
             
             
-            <a class="next" rel="next" href="/2020/06/08/sftpConnectionClosed/">sftp connection closed</a>
+            <a class="next" rel="next" href="/2020/06/08/oracleUnlock/">oracle用户账号被锁Unlock</a>
             
         </section>
 

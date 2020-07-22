@@ -1,0 +1,353 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+<meta name="viewport"
+      content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+<meta http-equiv="X-UA-Compatible" content="ie=edge">
+
+    <meta name="author" content="Chloe">
+
+
+    <meta name="subtitle" content="有些人能收到雨，而其他则只是被淋湿。">
+
+
+
+
+<title>在生产环境使用Kibana7.6.2 | Chloe&#39;s Blog</title>
+
+
+
+    <link rel="icon" href="/favicon.ico">
+
+
+
+
+    <!-- stylesheets list from _config.yml -->
+    
+    <link rel="stylesheet" href="/css/style.css">
+    
+
+
+
+    <!-- scripts list from _config.yml -->
+    
+    <script src="/js/script.js"></script>
+    
+    <script src="/js/tocbot.min.js"></script>
+    
+
+
+
+    
+    
+        <!-- MathJax配置，可通过单美元符号书写行内公式等 -->
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+    "HTML-CSS": {
+        preferredFont: "TeX",
+        availableFonts: ["STIX","TeX"],
+        linebreaks: { automatic:true },
+        EqnChunk: (MathJax.Hub.Browser.isMobile ? 10 : 50)
+    },
+    tex2jax: {
+        inlineMath: [ ["$", "$"], ["\\(","\\)"] ],
+        processEscapes: true,
+        ignoreClass: "tex2jax_ignore|dno",
+        skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+    },
+    TeX: {
+        equationNumbers: { autoNumber: "AMS" },
+        noUndefined: { attributes: { mathcolor: "red", mathbackground: "#FFEEEE", mathsize: "90%" } },
+        Macros: { href: "{}" }
+    },
+    messageStyle: "none"
+    });
+</script>
+<!-- 给MathJax元素添加has-jax class -->
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for(i=0; i < all.length; i += 1) {
+            all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+    });
+</script>
+<!-- 通过连接CDN加载MathJax的js代码 -->
+<script type="text/javascript" async
+        src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js?config=TeX-MML-AM_CHTML">
+</script>
+
+
+    
+
+
+<meta name="generator" content="Hexo 4.2.0"></head>
+<body>
+    <div class="wrapper">
+        <header>
+    <nav class="navbar">
+        <div class="container">
+            <div class="navbar-header header-logo"><a href="/">Chloe&#39;s Blog</a></div>
+            <div class="menu navbar-right">
+                
+                    <a class="menu-item" href="/archives">文章</a>
+                
+                    <a class="menu-item" href="/category">Categories[分类]</a>
+                
+                    <a class="menu-item" href="/tag">Tags</a>
+                
+                    <a class="menu-item" href="/about">About</a>
+                
+                <input id="switch_default" type="checkbox" class="switch_default">
+                <label for="switch_default" class="toggleBtn"></label>
+            </div>
+        </div>
+    </nav>
+
+    
+    <nav class="navbar-mobile" id="nav-mobile">
+        <div class="container">
+            <div class="navbar-header">
+                <div>
+                    <a href="/">Chloe&#39;s Blog</a><a id="mobile-toggle-theme">·&nbsp;Light</a>
+                </div>
+                <div class="menu-toggle" onclick="mobileBtn()">&#9776; Menu</div>
+            </div>
+            <div class="menu" id="mobile-menu">
+                
+                    <a class="menu-item" href="/archives">文章</a>
+                
+                    <a class="menu-item" href="/category">Categories[分类]</a>
+                
+                    <a class="menu-item" href="/tag">Tags</a>
+                
+                    <a class="menu-item" href="/about">About</a>
+                
+            </div>
+        </div>
+    </nav>
+
+</header>
+<script>
+    var mobileBtn = function f() {
+        var toggleMenu = document.getElementsByClassName("menu-toggle")[0];
+        var mobileMenu = document.getElementById("mobile-menu");
+        if(toggleMenu.classList.contains("active")){
+           toggleMenu.classList.remove("active")
+            mobileMenu.classList.remove("active")
+        }else{
+            toggleMenu.classList.add("active")
+            mobileMenu.classList.add("active")
+        }
+    }
+</script>
+        <div class="main">
+            <div class="container">
+    
+    
+        <div class="post-toc">
+    <div class="tocbot-list">
+    </div>
+    <div class="tocbot-list-menu">
+        <a class="tocbot-toc-expand" onclick="expand_toc()">Expand all</a>
+        <a onclick="go_top()">Back to top</a>
+        <a onclick="go_bottom()">Go to bottom</a>
+    </div>
+</div>
+
+<script>
+    document.ready(
+        function () {
+            tocbot.init({
+                tocSelector: '.tocbot-list',
+                contentSelector: '.post-content',
+                headingSelector: 'h1, h2, h3, h4, h5',
+                collapseDepth: 1,
+                orderedList: false,
+                scrollSmooth: true,
+            })
+        }
+    )
+
+    function expand_toc() {
+        var b = document.querySelector(".tocbot-toc-expand");
+        tocbot.init({
+            tocSelector: '.tocbot-list',
+            contentSelector: '.post-content',
+            headingSelector: 'h1, h2, h3, h4, h5',
+            collapseDepth: 6,
+            orderedList: false,
+            scrollSmooth: true,
+        });
+        b.setAttribute("onclick", "collapse_toc()");
+        b.innerHTML = "Collapse all"
+    }
+
+    function collapse_toc() {
+        var b = document.querySelector(".tocbot-toc-expand");
+        tocbot.init({
+            tocSelector: '.tocbot-list',
+            contentSelector: '.post-content',
+            headingSelector: 'h1, h2, h3, h4, h5',
+            collapseDepth: 1,
+            orderedList: false,
+            scrollSmooth: true,
+        });
+        b.setAttribute("onclick", "expand_toc()");
+        b.innerHTML = "Expand all"
+    }
+
+    function go_top() {
+        window.scrollTo(0, 0);
+    }
+
+    function go_bottom() {
+        window.scrollTo(0, document.body.scrollHeight);
+    }
+
+</script>
+    
+
+    
+    <article class="post-wrap">
+        <header class="post-header">
+            <h1 class="post-title">在生产环境使用Kibana7.6.2</h1>
+            
+                <div class="post-meta">
+                    
+                        Author: <a itemprop="author" rel="author" href="/">Chloe</a>
+                    
+
+                    
+                        <span class="post-time">
+                        Date: <a href="#">June 22, 2020&nbsp;&nbsp;9:29:40</a>
+                        </span>
+                    
+                    
+                </div>
+            
+        </header>
+
+        <div class="post-content">
+            <p>本文翻译自：<a href="https://www.elastic.co/guide/en/kibana/7.6/production.html#csp-strict-mode" target="_blank" rel="noopener">https://www.elastic.co/guide/en/kibana/7.6/production.html#csp-strict-mode</a><br>本文围绕以下内容：</p>
+<ul>
+<li>使用Elastic Stack安全配置参数</li>
+<li>要求内容符合安全策略</li>
+<li>支持SSL</li>
+<li>跨多个es节点的负载均衡</li>
+<li>跨多个Kibana实例的负载平衡</li>
+<li>跨多个Elasticsearch节点的高可用性</li>
+<li>内存</li>
+</ul>
+<p>如果你是kibana唯一的使用者，在本地运行配置接入到任何es集群中。相反的，如果你有许多使用者，你可能需要通过特殊的kibana节点来加载负载均衡配置，这些节点可以连接同一个es实例。<br>虽然kibana并不怎么消耗资源，我们还是推荐将kibana和es的datanode和masternode部署在不同的几点上。要在es集群中的节点之间分配kibana的流量，你可以运行kibana和es的客户端节点。有关更多信息，请参阅跨多个Elasticsearch节点的负载平衡。</p>
+<h2 id="使用Elastic-Stack安全配置参数"><a href="#使用Elastic-Stack安全配置参数" class="headerlink" title="使用Elastic Stack安全配置参数"></a>使用Elastic Stack安全配置参数</h2><p>您可以使用Elastic Stack安全性功能来控制用户可以通过Kibana访问哪些Elasticsearch数据。<br>启用安全功能后，Kibana用户必须登录。他们需要具有授予Kibana的权限以及访问将在Kibana中使用的索引的角色。<br>如果用户加载了一个Kibana仪表板，该仪表板访问了他们无权查看的索引中的数据，则他们将收到一条错误消息，指出该索引不存在。<br>有关授予对Kibana的访问权限的更多信息，请参阅授予对Kibana的访问权限。 </p>
+<h2 id="要求内容安全策略"><a href="#要求内容安全策略" class="headerlink" title="要求内容安全策略"></a>要求内容安全策略</h2><p>Kibana使用内容安全策略来帮助防止浏览器允许使用不安全的脚本，但是较旧的浏览器将默默地忽略此策略。<br>如果您的组织不需要支持Internet Explorer 11或我们支持的其他浏览器的更旧版本，我们建议您为内容安全策略启用Kibana的严格模式，这将阻止对不执行任何基本要求的浏览器的访问。一组CSP保护。为此，请在您的kibana.yml中将csp.strict设置为true。</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">csp.strict: true</span><br></pre></td></tr></table></figure>
+
+<h2 id="支持SSL"><a href="#支持SSL" class="headerlink" title="支持SSL"></a>支持SSL</h2><p>See Encrypting communications.</p>
+<h2 id="跨多个es节点的负载均衡"><a href="#跨多个es节点的负载均衡" class="headerlink" title="跨多个es节点的负载均衡"></a>跨多个es节点的负载均衡</h2><p>如果您在Elasticsearch集群中有多个节点，最简单方法是在与Kibana相同的机器上运行仅Elasticsearch协调节点（非master非data节点）。 Elasticsearch仅协调节点实际上是集群中的智能负载均衡器。它们处理传入的HTTP请求，根据需要将操作重定向到群集中的其他节点，并收集并返回结果。有关更多信息，请参见Elasticsearch参考中的节点。<br>要使用本地客户端节点来负载平衡Kibana请求：</p>
+<ol>
+<li>将Elasticsearch与Kibana安装在同一台计算机上。</li>
+<li>将该节点配置为仅协调节点。在elasticsearch.yml中，将node.data，node.master和node.ingest设置为false：</li>
+</ol>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">＃3。您希望此节点既不是主节点，也不是数据节点，也不是摄取节点，而是＃充当“搜索负载平衡器”（从节点获取数据，＃汇总结果等）</span><br><span class="line">node.master：false</span><br><span class="line">node.data：false</span><br><span class="line">node.ingest：false</span><br></pre></td></tr></table></figure>
+<ol start="3">
+<li>配置客户端节点以加入您的Elasticsearch集群。在elasticsearch.yml中，将cluster.name设置为cluster的名称：“ my_cluster”</li>
+</ol>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">cluster.name: "my_cluster"</span><br></pre></td></tr></table></figure>
+<ol start="4">
+<li>在network.host和transport.host下的elasticsearch.yml中检查传输和HTTP主机配置。 transport.host必须在群集成员可访问的网络上，network.host是Kibana的HTTP连接的网络（默认为localhost：9200）.network.host：localhosthttp.port：默认为9200</li>
+</ol>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">network.host: localhost</span><br><span class="line">http.port: 9200</span><br><span class="line"></span><br><span class="line"><span class="meta">#</span><span class="bash"> by default transport.host refers to network.host</span></span><br><span class="line">transport.host: &lt;external ip&gt;</span><br><span class="line">transport.tcp.port: 9300 - 9400</span><br></pre></td></tr></table></figure>
+<ol start="5">
+<li>在kibana.yml中，应将elasticsearch.hosts设置设置为[“ localhost：9200”]。</li>
+</ol>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">＃用于所有查询的Elasticsearch实例。</span><br><span class="line">elasticsearch.hosts：["http://localhost:9200"]</span><br></pre></td></tr></table></figure>
+<h2 id="跨多个Kibana实例的负载平衡"><a href="#跨多个Kibana实例的负载平衡" class="headerlink" title="跨多个Kibana实例的负载平衡"></a>跨多个Kibana实例的负载平衡</h2><p>要为负载平衡器后面的多个Kibana安装提供服务，必须更改配置。有关每个设置的详细信息，请参阅配置Kibana。<br>每个Kibana实例的唯一设置：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">server.uuid</span><br><span class="line">server.name</span><br></pre></td></tr></table></figure>
+<p>每个主机的唯一设置（例如，在同一虚拟机上运行多个安装）：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">logging.dest</span><br><span class="line">path.data</span><br><span class="line">pid.file</span><br><span class="line">server.port</span><br></pre></td></tr></table></figure>
+<p>必须设置的设置相同：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">xpack.security.encryptionKey //解密会话</span><br><span class="line">cookiexpack.reporting.encryptionKey //解密存储在Elasticsearch</span><br></pre></td></tr></table></figure>
+<p>可以使用-c标志从命令行使用单独的配置文件</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">bin / kibana -c config / instance1.yml</span><br><span class="line">bin / kibana -c config / instance2.yml</span><br></pre></td></tr></table></figure>
+<h2 id="跨多个Elasticsearch节点的高可用性"><a href="#跨多个Elasticsearch节点的高可用性" class="headerlink" title="跨多个Elasticsearch节点的高可用性"></a>跨多个Elasticsearch节点的高可用性</h2><p>可以将Kibana配置为连接到同一集群中的多个Elasticsearch节点。在节点不可用的情况下，Kibana将透明地连接到可用节点并继续运行。对可用主机的请求将以循环方式进行路由。<br>当前，控制台应用程序仅限于连接到列出的第一个节点。在kibana.yml：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">elasticsearch.hosts:</span><br><span class="line">    - http://elasticsearch1:9200</span><br><span class="line">    - http://elasticsearch2:9200</span><br></pre></td></tr></table></figure>
+<p>相关的配置包括elasticsearch.sniffInterval，elasticsearch.sniffOnStart和elasticsearch.sniffOnConnectionFault。这些可用于在调整群集大小时自动更新主机列表。可以在设置页面上找到参数。</p>
+<h2 id="内存"><a href="#内存" class="headerlink" title="内存"></a>内存</h2><p>Kibana的默认最大内存限制为1.4 GB，在大多数情况下，建议不要配置此设置。在某些情况下，例如大型报告作业，可能需要调整限制以满足更具体的要求。<br>您可以通过在NODE_OPTIONS环境变量中设置–max-old-space-size来修改此限制。对于deb和rpm，将其打包通过/etc/default/kibana传入并可以附加到文件底部。参数单位为MB：</p>
+<p>```shell<br>NODE_OPTIONS = “-max-old-space-size = 2048” bin/kibana</p>
+
+        </div>
+
+        
+            <section class="post-copyright">
+                
+                    <p class="copyright-item">
+                        <span>Author:</span>
+                        <span>Chloe</span>
+                    </p>
+                
+                
+                    <p class="copyright-item">
+                        <span>Permalink:</span>
+                        <span><a href="https://childgrown.github.io/2020/06/22/elk7-6-2-usingKibanaInProductionEnv/">https://childgrown.github.io/2020/06/22/elk7-6-2-usingKibanaInProductionEnv/</a></span>
+                    </p>
+                
+                
+                    <p class="copyright-item">
+                        <span>License:</span>
+                        <span>Copyright (c) 2019 <a href="http://creativecommons.org/licenses/by-nc/4.0/" target="_blank" rel="noopener">CC-BY-NC-4.0</a> LICENSE</span>
+                    </p>
+                
+                
+                     <p class="copyright-item">
+                         <span>Slogan:</span>
+                         <span>Do you believe in <strong>DESTINY</strong>?</span>
+                     </p>
+                
+
+            </section>
+        
+        <section class="post-tags">
+            <div>
+                <span>Tag(s):</span>
+                <span class="tag">
+                    
+                    
+                        <a href="/tags/elk7-6-2/"># elk7.6.2</a>
+                    
+                        <a href="/tags/kibana7-6-2/"># kibana7.6.2</a>
+                    
+                        
+                </span>
+            </div>
+            <div>
+                <a href="javascript:window.history.back();">back</a>
+                <span>· </span>
+                <a href="/">home</a>
+            </div>
+        </section>
+        <section class="post-nav">
+            
+                <a class="prev" rel="prev" href="/2020/06/22/openSourceCourses/">开源人才教程小tips</a>
+            
+            
+            <a class="next" rel="next" href="/2020/06/17/shutdown-esNode/">关闭Elasticsearch7.6.2的节点</a>
+            
+        </section>
+
+
+    </article>
+</div>
+
+        </div>
+        <footer id="footer" class="footer">
+    <div class="copyright">
+        <span>© Chloe | Powered by <a href="https://hexo.io" target="_blank">Hexo</a> & <a href="https://github.com/Siricee/hexo-theme-Chic" target="_blank">Chic</a></span>
+    </div>
+</footer>
+
+    </div>
+</body>
+</html>

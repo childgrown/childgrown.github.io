@@ -14,7 +14,7 @@
 
 
 
-<title>oracle用户账号被锁Unlock | Chloe&#39;s Blog</title>
+<title>开源人才教程小tips | Chloe&#39;s Blog</title>
 
 
 
@@ -146,11 +146,73 @@
             <div class="container">
     
     
+        <div class="post-toc">
+    <div class="tocbot-list">
+    </div>
+    <div class="tocbot-list-menu">
+        <a class="tocbot-toc-expand" onclick="expand_toc()">Expand all</a>
+        <a onclick="go_top()">Back to top</a>
+        <a onclick="go_bottom()">Go to bottom</a>
+    </div>
+</div>
+
+<script>
+    document.ready(
+        function () {
+            tocbot.init({
+                tocSelector: '.tocbot-list',
+                contentSelector: '.post-content',
+                headingSelector: 'h1, h2, h3, h4, h5',
+                collapseDepth: 1,
+                orderedList: false,
+                scrollSmooth: true,
+            })
+        }
+    )
+
+    function expand_toc() {
+        var b = document.querySelector(".tocbot-toc-expand");
+        tocbot.init({
+            tocSelector: '.tocbot-list',
+            contentSelector: '.post-content',
+            headingSelector: 'h1, h2, h3, h4, h5',
+            collapseDepth: 6,
+            orderedList: false,
+            scrollSmooth: true,
+        });
+        b.setAttribute("onclick", "collapse_toc()");
+        b.innerHTML = "Collapse all"
+    }
+
+    function collapse_toc() {
+        var b = document.querySelector(".tocbot-toc-expand");
+        tocbot.init({
+            tocSelector: '.tocbot-list',
+            contentSelector: '.post-content',
+            headingSelector: 'h1, h2, h3, h4, h5',
+            collapseDepth: 1,
+            orderedList: false,
+            scrollSmooth: true,
+        });
+        b.setAttribute("onclick", "expand_toc()");
+        b.innerHTML = "Expand all"
+    }
+
+    function go_top() {
+        window.scrollTo(0, 0);
+    }
+
+    function go_bottom() {
+        window.scrollTo(0, document.body.scrollHeight);
+    }
+
+</script>
+    
 
     
     <article class="post-wrap">
         <header class="post-header">
-            <h1 class="post-title">oracle用户账号被锁Unlock</h1>
+            <h1 class="post-title">开源人才教程小tips</h1>
             
                 <div class="post-meta">
                     
@@ -159,7 +221,7 @@
 
                     
                         <span class="post-time">
-                        Date: <a href="#">June 8, 2020&nbsp;&nbsp;1:34:48</a>
+                        Date: <a href="#">June 22, 2020&nbsp;&nbsp;11:35:38</a>
                         </span>
                     
                     
@@ -168,7 +230,7 @@
         </header>
 
         <div class="post-content">
-            <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">su - oracle</span><br><span class="line"></span><br><span class="line"><span class="meta">#</span><span class="bash">在服务器上sqlplus以sysdba用户登陆</span></span><br><span class="line">主机名[oracle]$sqlplus / as sysdba</span><br><span class="line"></span><br><span class="line"><span class="meta">#</span><span class="bash">修改用户<span class="built_in">test</span>密码,这里注意密码里面不要有@符号，会有：ORA-00922: missing or invalid option报错。</span></span><br><span class="line">alter user test identified by haitaijiaxin_5</span><br><span class="line"></span><br><span class="line"><span class="meta">#</span><span class="bash">解锁<span class="built_in">test</span>用户账号</span></span><br><span class="line">alter user test account unlock</span><br><span class="line"></span><br><span class="line"><span class="meta">#</span><span class="bash">测试账号：</span></span><br><span class="line"><span class="meta">SQL&gt;</span><span class="bash"> connect <span class="built_in">test</span>/haitaijiaxin_5             </span></span><br><span class="line">Connected.</span><br></pre></td></tr></table></figure>
+            <h2 id="linux课程"><a href="#linux课程" class="headerlink" title="linux课程"></a>linux课程</h2><h3 id="部署安装centos操作系统"><a href="#部署安装centos操作系统" class="headerlink" title="部署安装centos操作系统"></a>部署安装centos操作系统</h3>
         </div>
 
         
@@ -182,7 +244,7 @@
                 
                     <p class="copyright-item">
                         <span>Permalink:</span>
-                        <span><a href="https://childgrown.github.io/2020/06/08/oracleUnlock/">https://childgrown.github.io/2020/06/08/oracleUnlock/</a></span>
+                        <span><a href="https://childgrown.github.io/2020/06/22/openSourceCourses/">https://childgrown.github.io/2020/06/22/openSourceCourses/</a></span>
                     </p>
                 
                 
@@ -205,6 +267,14 @@
                 <span>Tag(s):</span>
                 <span class="tag">
                     
+                    
+                        <a href="/tags/linux%E8%AF%BE%E7%A8%8B/"># linux课程</a>
+                    
+                        <a href="/tags/SQL/"># SQL</a>
+                    
+                        <a href="/tags/python/"># python</a>
+                    
+                        
                 </span>
             </div>
             <div>
@@ -215,10 +285,10 @@
         </section>
         <section class="post-nav">
             
-                <a class="prev" rel="prev" href="/2020/06/15/umask-useradd-failed/">useradd创建用户失败，报【配置错误 - 未知项目“umask”(请通知管理员)】</a>
+                <a class="prev" rel="prev" href="/2020/07/02/wuzhihua/">wuzhihua</a>
             
             
-            <a class="next" rel="next" href="/2020/06/08/sftpConnectionClosed/">sftp connection closed</a>
+            <a class="next" rel="next" href="/2020/06/22/elk7-6-2-usingKibanaInProductionEnv/">在生产环境使用Kibana7.6.2</a>
             
         </section>
 
